@@ -1,0 +1,12 @@
+{
+	"chat-settings": "Chateinstellungen",
+	"disable": "Chat deaktivieren",
+	"disable-editing": "Chatnachrichtenbearbeitung/löschung deaktivieren",
+	"disable-editing-help": "Administratoren und globale Moderatoren sind von dieser Einschränkung ausgenommen",
+	"max-length": "Maximale Länge von Chatnachrichten",
+	"max-room-size": "Maximale Anzahl von Benutzern in Chatrooms",
+	"delay": "Zeit zwischen Chatnachrichten in Millisekunden",
+	"notification-delay": "Benachrichtigungsverzögerung für Chatnachrichten. (0 für keine Verzögerung)",
+	"restrictions.seconds-edit-after": "Anzahl der Sekunden, die eine Chat-Nachricht bearbeitet werden kann. (0 deaktiviert)",
+	"restrictions.seconds-delete-after": "Anzahl der Sekunden, die eine Chat-Nachricht löschbar bleibt. (0 deaktiviert)"
+}

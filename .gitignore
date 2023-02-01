@@ -1,0 +1,84 @@
+dist/
+yarn.lock
+npm-debug.log
+node_modules/
+sftp-config.json
+config.json
+jsconfig.json
+public/src/nodebb.min.js
+!src/views/config.json
+public/css/*.css
+*.sublime-project
+*.sublime-workspace
+.project
+*.swp
+Vagrantfile
+.vagrant
+provision.sh
+*.komodoproject
+.DS_Store
+feeds/recent.rss
+.eslintcache
+.svn
+dump.rdb
+
+logs/
+
+pidfile
+
+# templates
+/public/templates
+
+/public/uploads
+/test/uploads
+
+# compiled files
+/public/stylesheet.css
+/public/admin.css
+/public/nodebb.min.js
+/public/nodebb.min.js.map
+/public/acp.min.js
+/public/acp.min.js.map
+/public/installer.css
+/public/installer.min.js
+/public/bootstrap.min.css
+/public/logo.png
+
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
+*.iml
+
+## Directory-based project format:
+.idea/
+.vscode/
+
+## File-based project format:
+*.ipr
+*.iws
+
+## Transifex
+tx.exe
+.transifexrc
+
+##Coverage output
+coverage
+.nyc_output
+
+*.log
+test/files/normalise.jpg.png
+test/files/normalise-resized.jpg
+package-lock.json
+/package.json
+*.mongodb
+link-plugins.sh
+test.sh
+
+# Theme ignore
+theme/*.css
+!theme/less/bootstrap-flipped.css
+theme/npm-debug.log
+theme/sftp-config.json
+theme/*.sublime-project
+theme/*.sublime-workspace
+theme/.idea
+theme/.vscode
+theme/node_modules/
