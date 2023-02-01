@@ -1,0 +1,12 @@
+{
+    "administrators": "Skrbnik",
+    "global-moderators": "Globalni moderatorji",
+    "moderators": "Moderators",
+    "no-global-moderators": "Ni globalnih moderatorjev",
+    "no-sub-categories": "No subcategories",
+    "subcategories": "%1 subcategories",
+    "no-moderators": "Ni moderatorjev",
+    "add-administrator": "Dodaj skrbnika",
+    "add-global-moderator": "Dodaj globalnega moderatorja",
+    "add-moderator": "Dodaj moderatorja"
+}
