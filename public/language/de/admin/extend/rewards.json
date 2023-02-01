@@ -1,0 +1,15 @@
+{
+	"rewards": "Belohnungen",
+	"condition-if-users": "Wenn Benutzer",
+	"condition-is": "Ist:",
+	"condition-then": "Dann:",
+	"max-claims": "Anzahl der Male von Belohnungen, die beansprucht werden können",
+	"zero-infinite": "0 für unendlich eingeben",
+	"delete": "Löschen",
+	"enable": "Aktivieren",
+	"disable": "Deaktivieren",
+
+	"alert.delete-success": "Belohnung wurde erfolgreich gelöscht",
+	"alert.no-inputs-found": "Ungültige Belohnung - keine Eingaben gefunden!",
+	"alert.save-success": "Belohnungen erfolgreich gespeichert"
+}

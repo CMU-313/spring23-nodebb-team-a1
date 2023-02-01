@@ -1,0 +1,7 @@
+{
+	"notifications": "Benachrichtigungen",
+	"welcome-notification": "Willkommensbenachrichtigung",
+	"welcome-notification-link": "Willkommens-Benachrichtigungslink",
+	"welcome-notification-uid": "Begrüßungsbenachrichtigungsbenutzer (UID)",
+	"post-queue-notification-uid": "Post-Queue-Benutzer (UID)"
+}

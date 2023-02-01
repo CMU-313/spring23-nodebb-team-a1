@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+  },
+  "include": [
+    "public/src/**/*",
+    "src/**/*", 
+    "test/**/*",
+  ],
+  "exclude":[
+    "node_modules",
+  ]
+}
