@@ -1,0 +1,10 @@
+{
+	"crawlability-settings": "Crawling-Einstellungen",
+	"robots-txt": "Benutzerdefinierte robots.txt <small>Leer lassen für Standardeinstellung</small>",
+	"sitemap-feed-settings": "Sitemap- und Feed-Einstellungen",
+	"disable-rss-feeds": "RSS Feeds deaktivieren",
+	"disable-sitemap-xml": "sitemap.xml deaktivieren",
+	"sitemap-topics": "Anzahl der Themen, die in der Sitemap angezeigt werden sollen",
+	"clear-sitemap-cache": "Sitemap Cache leeren",
+	"view-sitemap": "Sitemap anzeigen"
+}
