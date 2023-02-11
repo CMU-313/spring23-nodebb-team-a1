@@ -6,14 +6,14 @@
 </div>
 
 <div class="panel-body">
-    <button class="btn btn-primary" id="create" data-action="new">Create Tag</button>
+    <button class="btn btn-primary" id="create-tag-new" onclick="startCreate()">[[admin/manage/tags:create]]</button>
 </div>
 
-<div class="modal" id="create-modal">
+<div class="modal fade in" id="create-modal-new">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeCreate()">&times;</button>
                 <h4 class="modal-title">[[admin/manage/tags:create]]</h4>
             </div>
             <div class="modal-body">
@@ -30,6 +30,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    function startCreate() {
+        document.getElementById("create-modal-new").style.display = "block";
+    }
+    function closeCreate() {
+        document.getElementById("create-modal-new").style.display = "";
+    }
+</script>
 
 <div class="tags">
     <!-- IF displayTagSearch -->
