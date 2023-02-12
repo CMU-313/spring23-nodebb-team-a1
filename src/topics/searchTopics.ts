@@ -13,9 +13,11 @@ export = function search(Topics: topic) {
             return [];
         }
         query = String(query).toLowerCase();
+        // The next line calls a function in a module that has not been updated to TS yet
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         const tidsTest = await db.getSortedSetRange(`topics:recent`, 0, -1) as number;
-        const topicsTest = await Topics.getTopicsByTids(tidsTest, {});
+        const topicsTest = Topics.getTopicsByTids(tidsTest, {});
         const res = topicsTest.filter(topic => topic.title.toLowerCase().includes(query));
         return res;
-    }
+    };
 }
