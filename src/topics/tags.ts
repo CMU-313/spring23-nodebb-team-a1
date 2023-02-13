@@ -1,15 +1,19 @@
-
+/* eslint-disable import/no-import-module-exports */
 import validator from 'validator';
 import _ from 'lodash';
+/* eslint-enable import/no-import-module-exports */
 
-import db from '../database';
-import meta from '../meta';
-import user from '../user';
-import categories from '../categories';
-import plugins from '../plugins';
-import utils from '../utils';
-import batch from '../batch';
-import cache from '../cache';
+// These files are not converted to TypeScript yet
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires */
+const db = require('../database');
+const meta = require('../meta');
+const user = require('../user');
+const categories = require('../categories');
+const plugins = require('../plugins');
+const utils = require('../utils');
+const batch = require('../batch');
+const cache = require('../cache');
+/* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires */
 
 interface TopicInfo {
     addTags: (tags: string[], tids: string[]) => Promise<void>;
@@ -110,6 +114,7 @@ export = function (Topics: TopicInfo) {
     }
 
     async function filterCategoryTags(tags: string[], cid: TopicField): Promise<string[]> {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         const tagWhitelist = await categories.getTagWhitelist([cid]) as string[];
         if (!Array.isArray(tagWhitelist[0]) || !tagWhitelist[0].length) {
             return tags;
@@ -122,12 +127,13 @@ export = function (Topics: TopicInfo) {
         if (!newTagName || tag === newTagName) {
             return;
         }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         newTagName = utils.cleanUpTag(newTagName, meta.config.maximumTagLength) as string;
 
         await Topics.createEmptyTag(newTagName);
         const allCids = {};
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         await batch.processSortedSet(`tag:${tag}:topics`, async (tids: string[]) => {
             const topicData = await Topics.getTopicsFields(tids, ['tid', 'cid', 'tags']);
             const cids = topicData.map(t => t.cid);
@@ -207,6 +213,7 @@ export = function (Topics: TopicInfo) {
         let { query } = data;
         let tagWhitelist = [] as Topic[];
         if (parseInt(data.cid, 10)) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             tagWhitelist = await categories.getTagWhitelist([data.cid]) as Topic[];
         }
         let tags = [] as Topic[];
@@ -268,9 +275,9 @@ export = function (Topics: TopicInfo) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         const result = await plugins.hooks.fire('filter:tags.filter', { tags: tags, cid: cid }) as Topic;
         tags = _.uniq(result.tags)
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             .map(tag => utils.cleanUpTag(tag, meta.config.maximumTagLength as number) as string)
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             .filter(tag => tag && tag.length >= (meta.config.minimumTagLength || 3));
 
         return await filterCategoryTags(tags, cid);
@@ -312,6 +319,7 @@ export = function (Topics: TopicInfo) {
         const [categoryData, isPrivileged, currentTags] = await Promise.all([
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             categories.getCategoryFields(cid, ['minTags', 'maxTags']) as Category,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             user.isPrivileged(uid) as boolean,
             tid ? Topics.getTopicTags(tid) : [] as string[],
         ]);
@@ -350,8 +358,10 @@ export = function (Topics: TopicInfo) {
         if (!isMember) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             await db.sortedSetAdd('tags:topic:count', 0, tag);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             cache.del('tags:topic:count');
         }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         const allCids = await categories.getAllCidsFromSet('categories:cid') as string[];
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         const isMembers = await db.isMemberOfSortedSets(
@@ -415,6 +425,7 @@ export = function (Topics: TopicInfo) {
         await db.sortedSetRemove('tags:topic:count', tags);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         cache.del('tags:topic:count');
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         const cids = await categories.getAllCidsFromSet('categories:cid') as number[];
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
@@ -463,8 +474,7 @@ export = function (Topics: TopicInfo) {
             return [] as string[];
         }
         tags.forEach((tag) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            tag.valueEscaped = validator.escape(String(tag.value)) as string;
+            tag.valueEscaped = validator.escape(String(tag.value));
             tag.valueEncoded = encodeURIComponent(tag.valueEscaped);
             tag.class = tag.valueEscaped.replace(/\s/g, '-');
         });
@@ -585,6 +595,7 @@ export = function (Topics: TopicInfo) {
             return [] as string[];
         }
         let result: Topic;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         if (plugins.hooks.hasListeners('filter:topics.searchTags')) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             result = await plugins.hooks.fire('filter:topics.searchTags', { data: data }) as Topic;
@@ -636,6 +647,7 @@ export = function (Topics: TopicInfo) {
     };
 
     Topics.getRelatedTopics = async function (topicData, uid) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
         if (plugins.hooks.hasListeners('filter:topic.getRelatedTopics')) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const result = await plugins.hooks.fire('filter:topic.getRelatedTopics', { topic: topicData, uid: uid, topics: [] }) as Topic;
