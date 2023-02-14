@@ -1,4 +1,16 @@
 <!-- IMPORT partials/breadcrumbs.tpl -->
+
+<script>
+function startCreate() {
+    document.getElementById("create-modal-new").style.display = "block";
+}
+function closeCreate() {
+    document.getElementById("create-modal-new").style.display = "";
+}
+function completeCreateTag() {
+    document.getElementById("create-modal-new").style.display = "none";
+}
+</script>
 <div data-widget-area="header">
     {{{each widgets.header}}}
     {{widgets.header.html}}
@@ -6,7 +18,7 @@
 </div>
 
 <div class="panel-body">
-    <button class="btn btn-primary" id="create-tag-new" onclick="startCreate()">[[admin/manage/tags:create]]</button>
+    <button class="btn btn-primary" id="create-tag-new" onclick="JavaScript:startCreate()">[[admin/manage/tags:create]]</button>
 </div>
 
 <div class="modal fade in" id="create-modal-new">
@@ -20,25 +32,16 @@
                 <form>
                     <div class="form-group">
                         <label for="create-tag-name">[[admin/manage/tags:name]]</label>
-                        <input type="text" class="form-control" id="create-tag-name" placeholder="[[admin/manage/tags:name]]" />
+                        <input type="text" class="form-control" id="create-tag-name1" placeholder="[[admin/manage/tags:name]]" />
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="create-modal-go">[[admin/manage/tags:create]]</button>
+                <button type="button" class="btn btn-primary" id="create-modal-go" onclick="completeCreateTag()">[[admin/manage/tags:create]]</button>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    function startCreate() {
-        document.getElementById("create-modal-new").style.display = "block";
-    }
-    function closeCreate() {
-        document.getElementById("create-modal-new").style.display = "";
-    }
-</script>
 
 <div class="tags">
     <!-- IF displayTagSearch -->
