@@ -16,11 +16,23 @@
                 <div class="alert alert-warning hide" id="new-topics-alert"></div>
             </a>
         </div>
-
         <div class="btn-group pull-right">
         <!-- IMPORT partials/category/tools.tpl -->
         </div>
-
+        <form class="form-inline">
+            <div class="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for a post" id="search-post" value="{query}">
+                    <span class="input-group-addon search-button"><i class="fa fa-search"></i></span>
+                </div>
+                <select id="results-per-page" class="form-control">
+                    <option value="50">[[admin/manage/users:50-per-page]]</option>
+                    <option value="100">[[admin/manage/users:100-per-page]]</option>
+                    <option value="250">[[admin/manage/users:250-per-page]]</option>
+                    <option value="500">[[admin/manage/users:500-per-page]]</option>
+                </select>  
+            </div>     
+        </form>
         <!-- IMPORT partials/category-filter-right.tpl -->
 
         <div class="btn-group pull-right bottom-sheet <!-- IF !filters.length -->hidden<!-- ENDIF !filters.length -->">
@@ -48,4 +60,17 @@
             <!-- IMPORT partials/paginator.tpl -->
         <!-- ENDIF config.usePagination -->
     </div>
+    
+    
+        </div>
+
+        <hr/>
+
+        <div class="search {search_display}">
+            <i class="fa fa-spinner fa-spin hidden"></i>
+
+            <div id="user-found-notify" class="label label-info {{{if !matchCount}}}hidden{{{end}}}">[[admin/manage/users:alerts.x-users-found, {matchCount}, {timing}]]</div>
+
+            <div id="user-notfound-notify" class="label label-danger {{{if !query}}}hidden{{{end}}} {{{if matchCount}}}hidden{{{end}}}">[[admin/manage/users:search.not-found]]</div>
+        </div>
 </div>
