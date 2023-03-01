@@ -5,6 +5,11 @@
         <span class="menu-icon"><i class="fa fa-fw fa-pencil"></i></span> [[topic:edit]]
     </a>
 </li>
+<li>
+    <a component="post/pin" role="menuitem" tabindex="-1" href="#">
+        <span class="menu-icon"><i class="fa fa-fw fa-chevron-up"></i></span> Pin
+    </a>
+</li>
 <li <!-- IF posts.deleted -->hidden<!-- ENDIF posts.deleted -->>
     <a component="post/delete" role="menuitem" tabindex="-1" href="#" class="<!-- IF posts.deleted -->hidden<!-- ENDIF posts.deleted -->">
         <div class="inline menu-icon"><i class="fa fa-fw fa-trash-o"></i></div> <span>[[topic:delete]]</span>
