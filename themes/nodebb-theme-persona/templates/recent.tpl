@@ -48,11 +48,17 @@
                 }
                 </script>
                 <select id="results-per-page" class="form-control">
-                    <option value="50">[[admin/manage/users:50-per-page]]</option>
-                    <option value="100">[[admin/manage/users:100-per-page]]</option>
-                    <option v alue="250">[[admin/manage/users:250-per-page]]</option>
-                    <option value="500">[[admin/manage/users:500-per-page]]</option>
-                </select>  
+                    <option value="50">50 per page</option>
+                    <option value="100">100 per page</option>
+                    <option value="250">250 per page</option>
+                    <option value="500">500 per page</option>
+                </select>
+                
+                <select class="form-control" id="filter-tag">
+                    <option value="alpha">Recently Tagged Posts</option>
+                    <option value="alpha">Most Common Tag</option>
+                </select>
+               
             </div>     
         </form>
         
