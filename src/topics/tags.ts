@@ -12,7 +12,6 @@ const plugins = require('../plugins');
 const utils = require('../utils');
 const batch = require('../batch');
 const cache = require('../cache');
-const validator: string = require('validator');
 /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires */
 
 interface TopicInfo {
@@ -475,7 +474,7 @@ export = function (Topics: TopicInfo) {
             return [] as string[];
         }
         tags.forEach((tag) => {
-            tag.valueEscaped = validator.escape(String(tag.value)) as string;
+            tag.valueEscaped = encodeURIComponent(tag.value);
             tag.valueEncoded = encodeURIComponent(tag.valueEscaped);
             tag.class = tag.valueEscaped.replace(/\s/g, '-');
         });
