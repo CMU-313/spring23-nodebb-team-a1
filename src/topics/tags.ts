@@ -1,5 +1,5 @@
-/* eslint-disable import/no-import-module-exports */
-import validator from 'validator';
+
+// import validator from 'validator';
 import _ from 'lodash';
 /* eslint-enable import/no-import-module-exports */
 
@@ -13,6 +13,7 @@ const plugins = require('../plugins');
 const utils = require('../utils');
 const batch = require('../batch');
 const cache = require('../cache');
+const validator: string = require('validator');
 /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires */
 
 interface TopicInfo {
