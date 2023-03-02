@@ -294,7 +294,7 @@ export = function (Topics: TopicInfo) {
             const set = `cid:${cid}:tags`;
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const bulkAdd = tags.filter(tag => tagToCount[tag] > 0);
-            const bulkAddMap = bulkAdd.map(tag => [set, tagToCount[tag], tag]) as string[] | string[][];
+            // const bulkAddMap = bulkAdd.map(tag => [set, tagToCount[tag], tag]) as string[] | string[][];
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const bulkRemove = tags.filter(tag => tagToCount[tag] <= 0)
                 .map(tag => [set, tag]);
@@ -475,7 +475,7 @@ export = function (Topics: TopicInfo) {
             return [] as string[];
         }
         tags.forEach((tag) => {
-            tag.valueEscaped = validator.escape(String(tag.value));
+            tag.valueEscaped = validator.escape(String(tag.value)) as string;
             tag.valueEncoded = encodeURIComponent(tag.valueEscaped);
             tag.class = tag.valueEscaped.replace(/\s/g, '-');
         });
@@ -538,7 +538,7 @@ export = function (Topics: TopicInfo) {
 
         await Promise.all(tags.map(updateTagCount));
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)) as string[], tags);
+        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)), tags);
     };
 
     Topics.removeTags = async function (tags, tids) {
@@ -566,7 +566,7 @@ export = function (Topics: TopicInfo) {
 
         await Promise.all(tags.map(updateTagCount));
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)) as string[], tags);
+        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)), tags);
     };
 
     Topics.updateTopicTags = async function (tid, tags) {
