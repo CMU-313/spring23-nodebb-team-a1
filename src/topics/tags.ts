@@ -274,10 +274,10 @@ export = function (Topics: TopicInfo) {
         const result = await plugins.hooks.fire('filter:tags.filter', { tags: tags, cid: cid }) as Topic;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         const tags0 = _.uniq(result.tags) as string[];
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        const tags1 = tags0.map(tag => utils.cleanUpTag(tag, meta.config.maximumTagLength as number) as string) as string[];
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        tags = tags1.filter(tag => tag && tag.length >= (meta.config.minimumTagLength || 3)) as string[];
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        const tags1 = (tags0.map(tag => utils.cleanUpTag(tag, meta.config.maximumTagLength as number) as string));
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        tags = tags1.filter(tag => tag && tag.length >= (meta.config.minimumTagLength || 3));
 
         return await filterCategoryTags(tags, cid);
     };
@@ -291,7 +291,6 @@ export = function (Topics: TopicInfo) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const tagToCount = _.zipObject(tags, counts) as Topic;
             const set = `cid:${cid}:tags`;
-            
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const bulkAdd = tags.filter(tag => tagToCount[tag] > 0);
             const bulkAddMap = bulkAdd.map(tag => [set, tagToCount[tag], tag]) as string[] | string[][];
@@ -542,7 +541,7 @@ export = function (Topics: TopicInfo) {
 
         await Promise.all(tags.map(updateTagCount));
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)), tags);
+        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)) as string[], tags);
     };
 
     Topics.removeTags = async function (tags, tids) {
@@ -570,7 +569,7 @@ export = function (Topics: TopicInfo) {
 
         await Promise.all(tags.map(updateTagCount));
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)) as string[], tags as string[]);
+        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)) as string[], tags);
     };
 
     Topics.updateTopicTags = async function (tid, tags) {
