@@ -1,10 +1,9 @@
-/* eslint-disable import/no-import-module-exports */
-import validator from 'validator';
-import _ from 'lodash';
-/* eslint-enable import/no-import-module-exports */
-
 // These files are not converted to TypeScript yet
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires */
+const async = require('async');
+const validator = require('validator');
+const _ = require('lodash');
+
 const db = require('../database');
 const meta = require('../meta');
 const user = require('../user');
