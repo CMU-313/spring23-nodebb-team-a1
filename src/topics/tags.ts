@@ -1,6 +1,5 @@
 // These files are not converted to TypeScript yet
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires */
-const async = require('async');
 const validator = require('validator');
 const _ = require('lodash');
 
@@ -273,6 +272,7 @@ export = function (Topics: TopicInfo) {
     Topics.filterTags = async function (tags, cid) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         const result = await plugins.hooks.fire('filter:tags.filter', { tags: tags, cid: cid }) as Topic;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         tags = _.uniq(result.tags)
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             .map(tag => utils.cleanUpTag(tag, meta.config.maximumTagLength as number) as string)
@@ -288,12 +288,15 @@ export = function (Topics: TopicInfo) {
             const counts = await db.sortedSetsCard(
                 tags.map(tag => `cid:${cid}:tag:${tag}:topics`)
             ) as number[];
-            const tagToCount = _.zipObject(tags, counts);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            const tagToCount = _.zipObject(tags, counts) as Topic;
             const set = `cid:${cid}:tags`;
-
+            
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const bulkAdd = tags.filter(tag => tagToCount[tag] > 0)
-                .map(tag => [set, tagToCount[tag], tag]);
-
+                .map(tag => [set, tagToCount[tag], tag]) as string[][];
+            
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const bulkRemove = tags.filter(tag => tagToCount[tag] <= 0)
                 .map(tag => [set, tag]);
 
@@ -314,6 +317,7 @@ export = function (Topics: TopicInfo) {
         if (!Array.isArray(tags)) {
             throw new Error('[[error:invalid-data]]');
         }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         tags = _.uniq(tags);
         const [categoryData, isPrivileged, currentTags] = await Promise.all([
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
@@ -498,11 +502,13 @@ export = function (Topics: TopicInfo) {
 
     Topics.getTopicsTagsObjects = async function (tids) {
         const topicTags = await Topics.getTopicsTags(tids);
-        const uniqueTopicTags = _.uniq(_.flatten(topicTags));
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        const uniqueTopicTags = _.uniq(_.flatten(topicTags)) as string[];
 
         const tags = uniqueTopicTags.map(tag => ({ value: tag }));
         const tagData = Topics.getTagData(tags);
-        const tagDataMap = _.zipObject(uniqueTopicTags, tagData);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        const tagDataMap = _.zipObject(uniqueTopicTags, tagData) as Record<string, string>;
 
         topicTags.forEach((tags, index) => {
             if (Array.isArray(tags)) {
@@ -536,6 +542,7 @@ export = function (Topics: TopicInfo) {
         ]);
 
         await Promise.all(tags.map(updateTagCount));
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)), tags);
     };
 
@@ -563,6 +570,7 @@ export = function (Topics: TopicInfo) {
         ]);
 
         await Promise.all(tags.map(updateTagCount));
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)), tags);
     };
 
@@ -664,6 +672,7 @@ export = function (Topics: TopicInfo) {
         let tids = await Promise.all(topicData.tags2.map(tag => Topics.getTagTids(tag.value,
             0,
             5))) as string[] | string[][];
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         tids = _.shuffle(_.uniq(_.flatten(tids))).slice(0, maximumTopics);
         const topics = await Topics.getTopics(tids, uid);
         return topics.filter(t => t && !t.deleted && parseInt(t.uid, 10) !== parseInt(uid, 10));
