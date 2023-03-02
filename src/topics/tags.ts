@@ -474,7 +474,8 @@ export = function (Topics: TopicInfo) {
             return [] as string[];
         }
         tags.forEach((tag) => {
-            tag.valueEscaped = validator.escape(String(tag.value));
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            tag.valueEscaped = validator.escape(String(tag.value)) as string;
             tag.valueEncoded = encodeURIComponent(tag.valueEscaped);
             tag.class = tag.valueEscaped.replace(/\s/g, '-');
         });
