@@ -2830,6 +2830,40 @@ describe('Topic\'s', () => {
             assert(!score);
         });
     });
+
+    describe('New search', () => {
+        it('testing with empty query', async () => {
+            const output = await topics.searchTopics('');
+            assert.equal(output.length, 0);
+        });
+
+        let newTopic;
+        let newPost;
+        before((done) => {
+            topics.post({
+                uid: topic.userId,
+                title: 'test',
+                content: topic.content,
+                cid: topic.categoryId,
+            }, (err, result) => {
+                if (err) {
+                    return done(err);
+                }
+
+                newTopic = result.topicData;
+                newPost = result.postData;
+                done();
+            });
+        });
+
+        it('should be able to return the topic with these parameters', async () => {
+            assert.equal((await topics.searchTopics(topic.title))[0].title, topic.title);
+        });
+
+        it('should return nothing', async () => {
+            assert.equal((await topics.searchTopics('none')).length, 0);
+        });
+    });
 });
 
 describe('Topics\'', async () => {
