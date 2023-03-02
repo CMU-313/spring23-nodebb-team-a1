@@ -273,11 +273,11 @@ export = function (Topics: TopicInfo) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         const result = await plugins.hooks.fire('filter:tags.filter', { tags: tags, cid: cid }) as Topic;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        tags = _.uniq(result.tags)
+        const tags0 = _.uniq(result.tags) as string[];
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            .map(tag => utils.cleanUpTag(tag, meta.config.maximumTagLength as number) as string)
+        const tags1 = tags0.map(tag => utils.cleanUpTag(tag, meta.config.maximumTagLength as number) as string) as string[];
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            .filter(tag => tag && tag.length >= (meta.config.minimumTagLength || 3));
+        tags = tags1.filter(tag => tag && tag.length >= (meta.config.minimumTagLength || 3)) as string[];
 
         return await filterCategoryTags(tags, cid);
     };
@@ -293,16 +293,15 @@ export = function (Topics: TopicInfo) {
             const set = `cid:${cid}:tags`;
             
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            const bulkAdd = tags.filter(tag => tagToCount[tag] > 0)
-                .map(tag => [set, tagToCount[tag], tag]) as string[][];
-            
+            const bulkAdd = tags.filter(tag => tagToCount[tag] > 0);
+            const bulkAddMap = bulkAdd.map(tag => [set, tagToCount[tag], tag]) as string[] | string[][];
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const bulkRemove = tags.filter(tag => tagToCount[tag] <= 0)
                 .map(tag => [set, tag]);
 
             await Promise.all([
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-                db.sortedSetAddBulk(bulkAdd),
+                db.sortedSetAddBulk(bulkAddMap),
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
                 db.sortedSetRemoveBulk(bulkRemove),
             ]);
@@ -318,7 +317,7 @@ export = function (Topics: TopicInfo) {
             throw new Error('[[error:invalid-data]]');
         }
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        tags = _.uniq(tags);
+        tags = _.uniq(tags) as string[];
         const [categoryData, isPrivileged, currentTags] = await Promise.all([
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             categories.getCategoryFields(cid, ['minTags', 'maxTags']) as Category,
@@ -571,7 +570,7 @@ export = function (Topics: TopicInfo) {
 
         await Promise.all(tags.map(updateTagCount));
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)), tags);
+        await Topics.updateCategoryTagsCount(_.uniq(topicData.map(t => t.cid)) as string[], tags as string[]);
     };
 
     Topics.updateTopicTags = async function (tid, tags) {
@@ -673,7 +672,7 @@ export = function (Topics: TopicInfo) {
             0,
             5))) as string[] | string[][];
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        tids = _.shuffle(_.uniq(_.flatten(tids))).slice(0, maximumTopics);
+        tids = _.shuffle(_.uniq(_.flatten(tids))).slice(0, maximumTopics) as string[];
         const topics = await Topics.getTopics(tids, uid);
         return topics.filter(t => t && !t.deleted && parseInt(t.uid, 10) !== parseInt(uid, 10));
     };
