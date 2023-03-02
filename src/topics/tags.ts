@@ -1,8 +1,10 @@
+/* eslint-disable import/no-import-module-exports */
+import validator from 'validator';
+import _ from 'lodash';
+/* eslint-enable import/no-import-module-exports */
+
 // These files are not converted to TypeScript yet
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires */
-const validator = require('validator');
-const _ = require('lodash');
-
 const db = require('../database');
 const meta = require('../meta');
 const user = require('../user');
@@ -288,8 +290,7 @@ export = function (Topics: TopicInfo) {
             const counts = await db.sortedSetsCard(
                 tags.map(tag => `cid:${cid}:tag:${tag}:topics`)
             ) as number[];
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            const tagToCount = _.zipObject(tags, counts) as Topic;
+            const tagToCount = _.zipObject(tags, counts);
             const set = `cid:${cid}:tags`;
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const bulkAdd = tags.filter(tag => tagToCount[tag] > 0);
@@ -300,7 +301,7 @@ export = function (Topics: TopicInfo) {
 
             await Promise.all([
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-                db.sortedSetAddBulk(bulkAddMap),
+                db.sortedSetAddBulk(bulkAdd),
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
                 db.sortedSetRemoveBulk(bulkRemove),
             ]);
@@ -315,8 +316,7 @@ export = function (Topics: TopicInfo) {
         if (!Array.isArray(tags)) {
             throw new Error('[[error:invalid-data]]');
         }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        tags = _.uniq(tags) as string[];
+        tags = _.uniq(tags);
         const [categoryData, isPrivileged, currentTags] = await Promise.all([
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             categories.getCategoryFields(cid, ['minTags', 'maxTags']) as Category,
@@ -475,8 +475,7 @@ export = function (Topics: TopicInfo) {
             return [] as string[];
         }
         tags.forEach((tag) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            tag.valueEscaped = validator.escape(String(tag.value)) as string;
+            tag.valueEscaped = validator.escape(String(tag.value));
             tag.valueEncoded = encodeURIComponent(tag.valueEscaped);
             tag.class = tag.valueEscaped.replace(/\s/g, '-');
         });
@@ -500,13 +499,11 @@ export = function (Topics: TopicInfo) {
 
     Topics.getTopicsTagsObjects = async function (tids) {
         const topicTags = await Topics.getTopicsTags(tids);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        const uniqueTopicTags = _.uniq(_.flatten(topicTags)) as string[];
+        const uniqueTopicTags = _.uniq(_.flatten(topicTags));
 
         const tags = uniqueTopicTags.map(tag => ({ value: tag }));
         const tagData = Topics.getTagData(tags);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        const tagDataMap = _.zipObject(uniqueTopicTags, tagData) as Record<string, string>;
+        const tagDataMap = _.zipObject(uniqueTopicTags, tagData);
 
         topicTags.forEach((tags, index) => {
             if (Array.isArray(tags)) {
@@ -670,8 +667,7 @@ export = function (Topics: TopicInfo) {
         let tids = await Promise.all(topicData.tags2.map(tag => Topics.getTagTids(tag.value,
             0,
             5))) as string[] | string[][];
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        tids = _.shuffle(_.uniq(_.flatten(tids))).slice(0, maximumTopics) as string[];
+        tids = _.shuffle(_.uniq(_.flatten(tids))).slice(0, maximumTopics);
         const topics = await Topics.getTopics(tids, uid);
         return topics.filter(t => t && !t.deleted && parseInt(t.uid, 10) !== parseInt(uid, 10));
     };
