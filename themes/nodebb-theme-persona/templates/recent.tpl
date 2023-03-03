@@ -24,7 +24,7 @@
             <div class="search">
                 <div class="input-group">
                 <input id="searchbar" onkeyup="search_topics()" type="text"
-                     placeholder="Search post" class="form-control">
+                     placeholder="Search for a post" class="form-control">
                 <span class="input-group-addon search-button"><i class="fa fa-search"></i></span>
                 <ul style="list-style: none;">
                 <li component="category/topic" class="row clearfix category-item {function.generateTopicClass}" 
