@@ -1,6 +1,6 @@
-# fly.toml file generated for a1-nodebb on 2023-03-14T15:00:15-04:00
+# fly.toml file generated for nodebb-team-a1-spring2023 on 2023-03-16T17:07:49-04:00
 
-app = "a1-nodebb"
+app = "nodebb-team-a1-spring2023"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "iad"
