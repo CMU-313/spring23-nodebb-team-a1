@@ -16,7 +16,7 @@
         "coverage": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
         "coveralls": "nyc report --reporter=text-lcov | coveralls && rm -r coverage",
         "build": "babel src/ -d lib/",
-        "prepublish": "{{include.package_manager}} run build",
+        "prepublish": "npm run build",
         "flow": "flow"
     },
     "nyc": {
