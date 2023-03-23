@@ -51,6 +51,7 @@
         "colors": "1.4.0",
         "commander": "9.4.1",
         "compare-versions": "5.0.3",
+        "complexity-report": "2.0.0-alpha",
         "compression": "1.7.4",
         "connect-flash": "0.1.1",
         "connect-mongo": "4.6.0",
