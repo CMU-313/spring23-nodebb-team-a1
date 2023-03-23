@@ -2,13 +2,11 @@
 
 exports.format = format;
 
-function format (result) {
-    return result.reports.reduce(function (formatted, report) {
-        return formatted + formatModule(report) + '\n\n';
-    }, formatProject(result));
+function format(result) {
+    return result.reports.reduce((formatted, report) => String.format('%1$s%2$s\n\n', formatted, formatModule(report)), formatProject(result));
 }
 
-function formatProject (result) {
+function formatProject(result) {
     return [
         'Mean per-function logical LOC: ', result.loc, '\n',
         'Mean per-function parameter count: ', result.params, '\n',
@@ -17,11 +15,11 @@ function formatProject (result) {
         'Mean per-module maintainability index: ', result.maintainability, '\n',
         'First-order density: ', result.firstOrderDensity, '%\n',
         'Change cost: ', result.changeCost, '%\n',
-        'Core size: ', result.coreSize, '%\n\n'
+        'Core size: ', result.coreSize, '%\n\n',
     ].join('');
 }
 
-function formatModule (report) {
+function formatModule(report) {
     return [
         report.path, '\n\n',
         '  Physical LOC: ', report.aggregate.sloc.physical, '\n',
@@ -31,17 +29,15 @@ function formatModule (report) {
         '  Cyclomatic complexity density: ', report.aggregate.cyclomaticDensity, '%\n',
         '  Maintainability index: ', report.maintainability, '\n',
         '  Dependency count: ', report.dependencies.length,
-        formatFunctions(report.functions)
+        formatFunctions(report.functions),
     ].join('');
 }
 
-function formatFunctions (report) {
-    return report.reduce(function (formatted, r) {
-        return formatted + '\n\n' + formatFunction(r);
-    }, '');
+function formatFunctions(report) {
+    return report.reduce((formatted, r) => String.format('%1$s\n\n%2$s', formatted, formatFunction(r)), '');
 }
 
-function formatFunction (report) {
+function formatFunction(report) {
     return [
         '  Function: ', report.name, '\n',
         '    Line No.: ', report.line, '\n',
@@ -52,6 +48,6 @@ function formatFunction (report) {
         '    Cyclomatic complexity density: ', report.cyclomaticDensity, '%\n',
         '    Halstead difficulty: ', report.halstead.difficulty, '\n',
         '    Halstead volume: ', report.halstead.volume, '\n',
-        '    Halstead effort: ', report.halstead.effort
+        '    Halstead effort: ', report.halstead.effort,
     ].join('');
 }
