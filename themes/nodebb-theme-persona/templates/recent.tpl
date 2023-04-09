@@ -16,53 +16,11 @@
                 <div class="alert alert-warning hide" id="new-topics-alert"></div>
             </a>
         </div>
+
         <div class="btn-group pull-right">
         <!-- IMPORT partials/category/tools.tpl -->
         </div>
-        
-        <form class="form-inline">
-            <div class="search">
-                <div class="input-group">
-                <input id="searchbar" onkeyup="search_topics()" type="text"
-                     placeholder="Search for a post" class="form-control">
-                <span class="input-group-addon search-button"><i class="fa fa-search"></i></span>
-                <ul style="list-style: none;">
-                <li component="category/topic" class="row clearfix category-item {function.generateTopicClass}" 
-                <link itemprop="url" content="{config.relative_path}/topic/{../slug}" />
-                </ul>
-                </div>
-                <script>
-                    function search_topics() {
-                    let input = document.getElementById('searchbar').value
-                    input=input.toLowerCase();
-                    let x = document.getElementsByClassName('row clearfix category-item {function.generateTopicClass}');
-                    
-                    for (i = 0; i < x.length; i++) { 
-                        if (!x[i].innerHTML.toLowerCase().includes(input)) {
-                            x[i].style.display="none";
-                        }
-                        else {
-                            x[i].style.display="list-item";                 
-                        }
-                    }
-                }
-                </script>
-                <select id="results-per-page" class="form-control">
-                    <option value="50">50 per page</option>
-                    <option value="100">100 per page</option>
-                    <option value="250">250 per page</option>
-                    <option value="500">500 per page</option>
-                </select>
-                
-                <select class="form-control" id="filter-tag">
-                    <option value="alpha">Recently Tagged Posts</option>
-                    <option value="alpha">Most Common Tag</option>
-                </select>
-               
-            </div>     
-        </form>
-        
-        
+
         <!-- IMPORT partials/category-filter-right.tpl -->
 
         <div class="btn-group pull-right bottom-sheet <!-- IF !filters.length -->hidden<!-- ENDIF !filters.length -->">
@@ -90,24 +48,4 @@
             <!-- IMPORT partials/paginator.tpl -->
         <!-- ENDIF config.usePagination -->
     </div>
-    
-    
-        </div>
-
-        <hr/>
-
-        <div class="search {search_display}">
-            <i class="fa fa-spinner fa-spin hidden"></i>
-
-            <div id="user-found-notify" class="label label-info {{{if !matchCount}}}hidden{{{end}}}">[[admin/manage/users:alerts.x-users-found, {matchCount}, {timing}]]</div>
-
-            <div id="user-notfound-notify" class="label label-danger {{{if !query}}}hidden{{{end}}} {{{if matchCount}}}hidden{{{end}}}">[[admin/manage/users:search.not-found]]</div>
-        </div>
 </div>
-
-        
-
-
-
-
-        
