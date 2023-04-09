@@ -27,7 +27,6 @@ define('forum/career', [
         signup.on('click', function (e) {
             const registerBtn = $(this);
             const errorEl = $('#career-error-notify');
-            const axios = require('axios')
             errorEl.addClass('hidden');
             e.preventDefault();
             validateForm(function () {
@@ -36,21 +35,26 @@ define('forum/career', [
                 }
 
                 registerBtn.addClass('disabled');
-                
-                axios.post('http://localhost:5000/career-model/predict.py', {
-                        student_id: student_id.val(),
-                        age: age.val(),
-                        gpa: gpa.val(),
-                        num_programming_languages: num_programming_languages.val(),
-                        num_past_internships: num_past_internships.val()
-                })
-                  .then(function (response) {
-                    console.log(response);
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
 
+                registerBtn.parents('form').ajaxSubmit({
+                    headers: {
+                        'x-csrf-token': config.csrf_token,
+                    },
+                    success: function () {
+                        location.reload();
+                    },
+                    error: function (data) {
+                        translator.translate(data.responseText, config.defaultLang, function (translated) {
+                            if (data.status === 403 && data.responseText === 'Forbidden') {
+                                window.location.href = config.relative_path + '/career?error=csrf-invalid';
+                            } else {
+                                errorEl.find('p').text(translated);
+                                errorEl.removeClass('hidden');
+                                registerBtn.removeClass('disabled');
+                            }
+                        });
+                    },
+                });
             });
         });
     };

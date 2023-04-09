@@ -21,9 +21,7 @@ Career.register = async (req, res) => {
             num_past_internships: userData.num_past_internships,
         };
 
-        userCareerData.prediction = 
-        
-        axios.post('http://localhost:5000/career-model/predict.py', {
+        userCareerData.prediction = axios.post('http://localhost:5000/career-model/predict.py', {
             userCareerData
         })
         .then(function (response) {

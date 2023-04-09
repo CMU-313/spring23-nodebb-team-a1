@@ -10,7 +10,7 @@
         <strong>Registration Error</strong>
         <p>{error}</p>
     </div>
-    <form component="career/local" class="form-horizontal" role="form" action="{config.relative_path}/api/v3/career/register" method="post">
+    <form component="career/local" class="form-horizontal" role="form" action="http://127.0.0.1:5000/api/v3/career/register" method="post">
         <div class="form-group">
             <label for="student_id" class="col-lg-3 control-label">Student ID</label>
             <div class="col-lg-9">

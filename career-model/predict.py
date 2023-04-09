@@ -25,16 +25,16 @@ class PredictionResult(BaseModel):
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-@app.route('/career-model/predict.py', methods=["GET", "POST", "OPTION"])
+@app.route('/api/v3/career/register', methods=["POST", "OPTION"])
 @cross_origin()
 def handle_career_request():
     student = {}
     student["student_id"] = request.form['student_id']
-    student["gender"] = "Male"
+    student["gender"] = request.form["gender"]
     student["age"] = request.form['age']
-    student["major"] = "Computer Science"
+    student["major"] = request.form["major"]
     student["gpa"] = request.form['gpa']
-    student["extra_curricular"] = "Buggy"
+    student["extra_curricular"] = request.form["extra_curricular"]
     student["num_programming_languages"] = request.form['num_programming_languages']
     student["num_past_internships"] = request.form['num_past_internships']
 
