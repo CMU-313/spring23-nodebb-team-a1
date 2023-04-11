@@ -2,7 +2,6 @@ dist/
 yarn.lock
 npm-debug.log
 node_modules/
-!/node_modules/axios
 sftp-config.json
 config.json
 jsconfig.json
