@@ -28,7 +28,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route('/career_request', methods=["POST", "OPTION"])
 @cross_origin()
 def handle_career_request():
-    good_employee = predict(request.json['userCareerData'])
+    good_employee = predict(request.json)
     print(good_employee)
     return good_employee
 
