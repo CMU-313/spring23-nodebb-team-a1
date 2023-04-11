@@ -1,7 +1,7 @@
 'use strict';
 
 // eslint-disable-next-line import/no-unresolved
-const axios = require('axios');
+const axios = require('../../../node_modules/axios');
 const helpers = require('../helpers');
 const user = require('../../user');
 const db = require('../../database');
