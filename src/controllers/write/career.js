@@ -1,9 +1,10 @@
 'use strict';
 
+// eslint-disable-next-line import/no-unresolved
+const axios = require('axios');
 const helpers = require('../helpers');
 const user = require('../../user');
 const db = require('../../database');
-const axios = require('axios');
 
 const Career = module.exports;
 
@@ -23,18 +24,18 @@ Career.register = async (req, res) => {
 
         let response;
         try {
-        response = await axios.post('http://localhost:5000/career_request', {
-            userCareerData
-        });
+            response = await axios.post('http://localhost:5000/career_request', {
+                userCareerData,
+            });
         } catch (error) {
             console.log(error);
             helpers.noScriptErrors(req, res, error.message, 400);
         }
 
         if (response && response.data) {
-            userCareerData.prediction = parseInt(response.data.good_employee);
+            userCareerData.prediction = parseInt(response.data.good_employee, 10);
         } else {
-            console.log("No response received from server");
+            console.log('No response received from server');
         }
 
         await user.setCareerData(req.uid, userCareerData);
