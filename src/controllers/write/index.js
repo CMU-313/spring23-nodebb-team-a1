@@ -12,3 +12,4 @@ Write.flags = require('./flags');
 Write.admin = require('./admin');
 Write.files = require('./files');
 Write.utilities = require('./utilities');
+Write.career = require('./career');

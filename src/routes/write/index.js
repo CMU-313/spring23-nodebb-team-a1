@@ -42,6 +42,7 @@ Write.reload = async (params) => {
     router.use('/api/v3/admin', require('./admin')());
     router.use('/api/v3/files', require('./files')());
     router.use('/api/v3/utilities', require('./utilities')());
+    router.use('/api/v3/career', require('./career')());
 
     router.get('/api/v3/ping', writeControllers.utilities.ping.get);
     router.post('/api/v3/ping', middleware.authenticateRequest, middleware.ensureLoggedIn, writeControllers.utilities.ping.post);

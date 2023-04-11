@@ -3,12 +3,12 @@
 const helpers = require('../helpers');
 const user = require('../../user');
 const db = require('../../database');
+const axios = require('axios');
 
 const Career = module.exports;
 
 Career.register = async (req, res) => {
     const userData = req.body;
-    const axios = require('axios')
     try {
         const userCareerData = {
             student_id: userData.student_id,
@@ -21,17 +21,21 @@ Career.register = async (req, res) => {
             num_past_internships: userData.num_past_internships,
         };
 
-        userCareerData.prediction = axios.post('http://localhost:5000/career-model/predict.py', {
+        let response;
+        try {
+        response = await axios.post('http://localhost:5000/career_request', {
             userCareerData
-        })
-        .then(function (response) {
-            console.log(response);
-            return response;
-        })
-        .catch(function (error) {
-            console.log(error);
         });
+        } catch (error) {
+            console.log(error);
+            helpers.noScriptErrors(req, res, error.message, 400);
+        }
 
+        if (response && response.data) {
+            userCareerData.prediction = parseInt(response.data.good_employee);
+        } else {
+            console.log("No response received from server");
+        }
 
         await user.setCareerData(req.uid, userCareerData);
         db.sortedSetAdd('users:career', req.uid, req.uid);
