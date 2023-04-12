@@ -278,7 +278,6 @@ describe('API', async () => {
             '/api/user/{userslug}/theme', // from persona
         ];
         paths = paths.filter(path => path.method !== '_all' && !exclusionPrefixes.some(prefix => path.path.startsWith(prefix)));
-
     });
 
     // generateTests(readApi, Object.keys(readApi.paths));
