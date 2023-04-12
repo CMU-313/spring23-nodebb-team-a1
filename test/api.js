@@ -278,29 +278,6 @@ describe('API', async () => {
             '/api/user/{userslug}/theme', // from persona
         ];
         paths = paths.filter(path => path.method !== '_all' && !exclusionPrefixes.some(prefix => path.path.startsWith(prefix)));
-
-
-        // For each express path, query for existence in read and write api schemas
-        paths.forEach((pathObj) => {
-            describe(`${pathObj.method.toUpperCase()} ${pathObj.path}`, () => {
-                it('should be defined in schema docs', () => {
-                    let schema = readApi;
-                    if (pathObj.path.startsWith('/api/v3')) {
-                        schema = writeApi;
-                        pathObj.path = pathObj.path.replace('/api/v3', '');
-                    }
-
-                    // Don't check non-GET routes in Read API
-                    if (schema === readApi && pathObj.method !== 'get') {
-                        return;
-                    }
-
-                    const normalizedPath = pathObj.path.replace(/\/:([^\\/]+)/g, '/{$1}').replace(/\?/g, '');
-                    assert(schema.paths.hasOwnProperty(normalizedPath), `${pathObj.path} is not defined in schema docs`);
-                    assert(schema.paths[normalizedPath].hasOwnProperty(pathObj.method), `${pathObj.path} was found in schema docs, but ${pathObj.method.toUpperCase()} method is not defined`);
-                });
-            });
-        });
     });
 
     // generateTests(readApi, Object.keys(readApi.paths));

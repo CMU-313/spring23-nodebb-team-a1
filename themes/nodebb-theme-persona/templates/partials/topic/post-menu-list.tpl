@@ -15,7 +15,6 @@
 <li <!-- IF pinned -->hidden<!-- ENDIF pinned -->><a component="topic/pin" href="#" class="<!-- IF pinned -->hidden<!-- ENDIF pinned -->"><i class="fa fa-fw fa-thumb-tack"></i> [[topic:thread_tools.pin]]</a></li>
 <li <!-- IF !pinned -->hidden<!-- ENDIF !pinned -->><a component="topic/unpin" href="#" class="<!-- IF !pinned -->hidden<!-- ENDIF !pinned -->"><i class="fa fa-fw fa-thumb-tack fa-rotate-90"></i> [[topic:thread_tools.unpin]]</a></li>
 <!-- ENDIF privileges.editable -->
-
 <li <!-- IF posts.deleted -->hidden<!-- ENDIF posts.deleted -->>
     <a component="post/delete" role="menuitem" tabindex="-1" href="#" class="<!-- IF posts.deleted -->hidden<!-- ENDIF posts.deleted -->">
         <div class="inline menu-icon"><i class="fa fa-fw fa-trash-o"></i></div> <span>[[topic:delete]]</span>

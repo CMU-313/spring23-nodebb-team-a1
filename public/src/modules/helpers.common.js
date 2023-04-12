@@ -24,6 +24,8 @@ module.exports = function (utils, Benchpress, relative_path) {
         userAgentIcons,
         buildAvatar,
         register,
+        getPredictionColor,
+        formatPrediction,
         __escape: identity,
     };
 
@@ -337,6 +339,15 @@ module.exports = function (utils, Benchpress, relative_path) {
         return '<span ' + attributes.join(' ') + ' style="' + styles.join(' ') + '">' + userObj['icon:text'] + '</span>';
     }
 
+    function getPredictionColor(prediction) {
+        if (prediction === 1 || prediction === '1') { return `"background-color: rgb(0, 255, 0);"`; }
+        return `"background-color: rgb(255, 0, 0);"`;
+    }
+
+    function formatPrediction(prediction) {
+        return prediction;
+    }
+
     function register() {
         Object.keys(helpers).forEach(function (helperName) {
             Benchpress.registerHelper(helperName, helpers[helperName]);
@@ -345,3 +356,4 @@ module.exports = function (utils, Benchpress, relative_path) {
 
     return helpers;
 };
+

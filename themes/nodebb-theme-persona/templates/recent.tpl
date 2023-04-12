@@ -19,7 +19,7 @@
         <div class="btn-group pull-right">
         <!-- IMPORT partials/category/tools.tpl -->
         </div>
-        
+
         <form class="form-inline">
             <div class="search">
                 <div class="input-group">
@@ -53,16 +53,16 @@
                     <option value="250">250 per page</option>
                     <option value="500">500 per page</option>
                 </select>
-                
+
                 <select class="form-control" id="filter-tag">
                     <option value="alpha">Recently Tagged Posts</option>
                     <option value="alpha">Most Common Tag</option>
                 </select>
-               
+
             </div>     
         </form>
-        
-        
+
+
         <!-- IMPORT partials/category-filter-right.tpl -->
 
         <div class="btn-group pull-right bottom-sheet <!-- IF !filters.length -->hidden<!-- ENDIF !filters.length -->">
@@ -90,8 +90,8 @@
             <!-- IMPORT partials/paginator.tpl -->
         <!-- ENDIF config.usePagination -->
     </div>
-    
-    
+
+
         </div>
 
         <hr/>
@@ -104,10 +104,3 @@
             <div id="user-notfound-notify" class="label label-danger {{{if !query}}}hidden{{{end}}} {{{if matchCount}}}hidden{{{end}}}">[[admin/manage/users:search.not-found]]</div>
         </div>
 </div>
-
-        
-
-
-
-
-        
